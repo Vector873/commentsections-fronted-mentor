@@ -1,0 +1,220 @@
+@import url("https://fonts.google.com/specimen/Rubik");
+body {
+  margin: 0;
+  padding: 0;
+  background-color: hsl(228, 33%, 97%);
+}
+.maindiv {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 3rem;
+  height: 100%;
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.cmnt {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  width: 35rem;
+  height: 6.7rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+.cmnthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+}
+.name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: -1rem;
+}
+.username {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.name img {
+  width: 2rem;
+  height: 2rem;
+}
+.name span {
+  font-weight: 700;
+}
+p {
+  color: hsl(211, 10%, 45%);
+}
+.para {
+  margin-top: -1rem;
+}
+.btnreply {
+  color: hsl(238, 40%, 52%);
+  font-weight: 700;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+.btnreply:hover {
+  color: hsl(239, 57%, 85%);
+}
+.cmntbox {
+  display: flex;
+  background-color: white;
+  width: 35rem;
+  height: 6.7rem;
+  padding: 1rem 1rem 1rem 1rem;
+  gap: 1rem;
+}
+.cmntbox img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+.cmntbox textarea {
+  height: 5rem;
+  width: 23rem;
+  text-align: start;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  font-size: 16px;
+  border-color: hsl(223, 19%, 93%);
+  outline: none;
+  border-radius: 10px;
+  resize: none;
+  cursor: pointer;
+}
+.cmntbox textarea:focus {
+  border-color: hsl(211, 10%, 45%);
+}
+.cmntbox button {
+  height: 2rem;
+  background-color: hsl(238, 40%, 52%);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  width: 5rem;
+  height: 2.6rem;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+.cmntbox button:hover {
+  background-color: hsl(239, 57%, 85%);
+}
+.replies {
+  display: flex;
+  width: 37rem;
+  flex-direction: row;
+  padding-top: 1rem;
+}
+.line {
+  width: 2.5px;
+  height: auto;
+  background-color: hsl(223, 19%, 93%);
+  margin-left: 2.4rem;
+  margin-bottom: 1rem;
+}
+.replydiv {
+  display: flex;
+  align-items: end;
+  width: 37rem;
+  flex-direction: column;
+}
+.reply {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  width: 30em;
+  height: 6.7rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: 16px;
+}
+.para span {
+  color: hsl(238, 40%, 52%);
+  font-weight: 700;
+}
+.you {
+  background-color: hsl(238, 40%, 52%);
+  color: white;
+  text-align: center;
+  border-radius: 3px;
+  width: 2.6rem;
+  padding-bottom: 4px;
+  font-size: 13px;
+}
+.btnsuser {
+  display: flex;
+  flex-direction: row;
+}
+.btndel {
+  color: hsl(358, 79%, 66%);
+  font-weight: 700;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+.btndel:hover {
+  color: hsl(357, 100%, 86%);
+}
+@media screen and (max-width: 620px) {
+  .maindiv {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .cmnt {
+    width: auto;
+    height: auto;
+  }
+  .replies {
+    width: auto;
+  }
+  .replydiv {
+    width: auto;
+  }
+  .reply {
+    width: auto;
+    height: auto;
+  }
+  .cmntbox {
+    width: auto;
+    height: auto;
+  }
+  .cmntbox textarea {
+    width: auto;
+    height: auto;
+  }
+}
+@media screen and (max-width: 400px) {
+  .username {
+    gap: 0;
+    flex-direction: column;
+  }
+  .username span {
+    margin-bottom: -15px;
+    margin-top: 11px;
+  }
+  .btnsuser {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cmnt {
+    width: 20rem;
+  }
+  .cmntbox button {
+    width: auto;
+  }
+}
