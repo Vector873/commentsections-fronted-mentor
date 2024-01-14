@@ -129,7 +129,6 @@ function App() {
       comments: updatedComments,
     });
   };
-
   return (
     <div className="maindiv">
       {dataobj.comments &&

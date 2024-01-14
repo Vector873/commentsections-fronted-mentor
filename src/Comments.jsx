@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import iconreply from "./assets/icon-reply.svg";
 import iconedit from "./assets/icon-edit.svg";
 import icondel from "./assets/icon-delete.svg";
 function Comments({ c, delcmnt, delrep }) {
+  const [edit, setedit] = useState(false);
   return (
     <>
       <div className="cmnt">
@@ -18,14 +19,20 @@ function Comments({ c, delcmnt, delrep }) {
             </div>
           </div>
           {c.user.username == "juliusomo" ? (
-            <div>
-              <button className="btndel" onClick={() => delcmnt(c.id)}>
-                <img src={icondel} alt="logo not found" /> Delete
+            edit ? (
+              <button className="update" onClick={() => setedit(false)}>
+                UPDATE
               </button>
-              <button className="btnreply">
-                <img src={iconedit} alt="logo not found" /> Edit
-              </button>
-            </div>
+            ) : (
+              <div className="btnsuser">
+                <button className="btndel" onClick={() => delcmnt(c.id)}>
+                  <img src={icondel} alt="logo not found" /> Delete
+                </button>
+                <button className="btnreply" onClick={() => setedit(true)}>
+                  <img src={iconedit} alt="logo not found" /> Edit
+                </button>
+              </div>
+            )
           ) : (
             <button className="btnreply">
               <img src={iconreply} alt="logo not found" /> Reply
@@ -33,12 +40,14 @@ function Comments({ c, delcmnt, delrep }) {
           )}
         </div>
         <div className="para">
-          <p>{c.content}</p>
+          {edit == true && c.user.username == "juliusomo" ? (
+            <textarea value={c.content} onChange={() => {}} />
+          ) : (
+            <p>{c.content}</p>
+          )}
         </div>
       </div>
-      {c.replies.length === 0 ? (
-        <></>
-      ) : (
+      {c.replies.length === 0 ? null : (
         <div className="replies">
           <div className="line"></div>
           <div className="replydiv">
@@ -61,17 +70,26 @@ function Comments({ c, delcmnt, delrep }) {
                     </div>
                   </div>
                   {r.user.username == "juliusomo" ? (
-                    <div className="btnsuser">
-                      <button
-                        className="btndel"
-                        onClick={() => delrep(c.id, r.id)}
-                      >
-                        <img src={icondel} alt="logo not found" /> Delete
+                    edit ? (
+                      <button className="update" onClick={() => setedit(false)}>
+                        UPDATE
                       </button>
-                      <button className="btnreply">
-                        <img src={iconedit} alt="logo not found" /> Edit
-                      </button>
-                    </div>
+                    ) : (
+                      <div className="btnsuser">
+                        <button
+                          className="btndel"
+                          onClick={() => delrep(c.id, r.id)}
+                        >
+                          <img src={icondel} alt="logo not found" /> Delete
+                        </button>
+                        <button
+                          className="btnreply"
+                          onClick={() => setedit(true)}
+                        >
+                          <img src={iconedit} alt="logo not found" /> Edit
+                        </button>
+                      </div>
+                    )
                   ) : (
                     <button className="btnreply">
                       <img src={iconreply} alt="logo not found" /> Reply
@@ -79,9 +97,13 @@ function Comments({ c, delcmnt, delrep }) {
                   )}
                 </div>
                 <div className="para">
-                  <p>
-                    <span>@{r.replyingTo}</span> {r.content}
-                  </p>
+                  {edit == true && r.user.username == "juliusomo" ? (
+                    <textarea value={r.content} onChange={() => {}} />
+                  ) : (
+                    <p>
+                      <span>@{r.replyingTo}</span> {r.content}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
