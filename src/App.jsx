@@ -59,6 +59,43 @@ function App() {
     ],
   });
   const [cmnt, setcmnt] = useState("");
+  const replysend = (c, pid) => {
+    if (c == "") return;
+    const { currentUser, comments } = dataobj;
+    const newReply = {
+      id: comments.map((c) => {
+        if (c.id == pid) {
+          return c.replies.length + 1;
+        }
+      }),
+      content: c,
+      createdAt: formatCreatedAt(new Date()),
+      score: 12,
+      replyingTo: comments.map((c) => {
+        if (c.id == pid) {
+          return c.user.username;
+        }
+      }),
+      user: {
+        image: "./src/assets/avatars/image-juliusomo.png",
+        username: "juliusomo",
+      },
+    };
+    const updatedComments = comments.map((c) => {
+      if (c.id == pid) {
+        const updatedReplies = [...c.replies, newReply];
+        return {
+          ...c,
+          replies: updatedReplies,
+        };
+      }
+      return c;
+    });
+    setdataobj({
+      ...dataobj,
+      comments: updatedComments,
+    });
+  };
   const send = () => {
     if (cmnt == "") return;
     const { currentUser, comments } = dataobj;
@@ -133,7 +170,13 @@ function App() {
     <div className="maindiv">
       {dataobj.comments &&
         dataobj.comments.map((c) => (
-          <Comments c={c} key={c.id} delcmnt={delcmnt} delrep={delrep} />
+          <Comments
+            c={c}
+            key={c.id}
+            delcmnt={delcmnt}
+            delrep={delrep}
+            replysend={replysend}
+          />
         ))}
       <div className="cmntbox">
         <img src={dataobj.currentUser.image} alt="image not found" />

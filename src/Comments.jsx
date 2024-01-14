@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import iconreply from "./assets/icon-reply.svg";
 import iconedit from "./assets/icon-edit.svg";
 import icondel from "./assets/icon-delete.svg";
-function Comments({ c, delcmnt, delrep }) {
+function Comments({ c, delcmnt, delrep, replysend }) {
   const [edit, setedit] = useState(false);
+  const [rep, setrep] = useState(false);
+  const [repcmnt, setrepcmnt] = useState("");
+  const send = (id) => {
+    setrep(false);
+    replysend(repcmnt, id);
+    setrepcmnt("");
+  };
   return (
     <>
       <div className="cmnt">
@@ -34,7 +41,7 @@ function Comments({ c, delcmnt, delrep }) {
               </div>
             )
           ) : (
-            <button className="btnreply">
+            <button className="btnreply" onClick={() => setrep(true)}>
               <img src={iconreply} alt="logo not found" /> Reply
             </button>
           )}
@@ -47,6 +54,20 @@ function Comments({ c, delcmnt, delrep }) {
           )}
         </div>
       </div>
+      {rep ? (
+        <div className="cmntbox">
+          <img
+            src={"./src/assets/avatars/image-juliusomo.png"}
+            alt="image not found"
+          />
+          <textarea
+            placeholder="Add a comment..."
+            onChange={(e) => setrepcmnt(e.target.value)}
+            value={repcmnt}
+          />
+          <button onClick={() => send(c.id)}>SEND</button>
+        </div>
+      ) : null}
       {c.replies.length === 0 ? null : (
         <div className="replies">
           <div className="line"></div>
