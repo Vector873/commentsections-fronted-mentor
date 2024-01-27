@@ -112,7 +112,12 @@ function Comments({ c, delcmnt, delrep, replysend }) {
                       </div>
                     )
                   ) : (
-                    <button className="btnreply">
+                    <button
+                      className="btnreply"
+                      onClick={() => {
+                        setrep(true);
+                      }}
+                    >
                       <img src={iconreply} alt="logo not found" /> Reply
                     </button>
                   )}
