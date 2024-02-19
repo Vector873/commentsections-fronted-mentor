@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import iconreply from "./assets/icon-reply.svg";
 import iconedit from "./assets/icon-edit.svg";
 import icondel from "./assets/icon-delete.svg";
-function Comments({ c, delcmnt, delrep, replysend }) {
+function Comments({
+  c,
+  delcmnt,
+  delrep,
+  replysend,
+  updatec,
+  updaterep,
+  upcmnt,
+  setupdcmnt,
+}) {
   const [edit, setedit] = useState(false);
   const [rep, setrep] = useState(false);
   const [repcmnt, setrepcmnt] = useState("");
@@ -10,6 +19,18 @@ function Comments({ c, delcmnt, delrep, replysend }) {
     setrep(false);
     replysend(repcmnt, id);
     setrepcmnt("");
+  };
+  const editcmnt = (con) => {
+    setupdcmnt(con);
+    setedit(true);
+  };
+  const updatecmnt = (id) => {
+    updatec(id);
+    setedit(false);
+  };
+  const updatereply = (pid, cid) => {
+    updaterep(pid, cid);
+    setedit(false);
   };
   return (
     <>
@@ -27,7 +48,7 @@ function Comments({ c, delcmnt, delrep, replysend }) {
           </div>
           {c.user.username == "juliusomo" ? (
             edit ? (
-              <button className="update" onClick={() => setedit(false)}>
+              <button className="update" onClick={() => updatecmnt(c.id)}>
                 UPDATE
               </button>
             ) : (
@@ -35,7 +56,10 @@ function Comments({ c, delcmnt, delrep, replysend }) {
                 <button className="btndel" onClick={() => delcmnt(c.id)}>
                   <img src={icondel} alt="logo not found" /> Delete
                 </button>
-                <button className="btnreply" onClick={() => setedit(true)}>
+                <button
+                  className="btnreply"
+                  onClick={() => editcmnt(c.content)}
+                >
                   <img src={iconedit} alt="logo not found" /> Edit
                 </button>
               </div>
@@ -48,7 +72,12 @@ function Comments({ c, delcmnt, delrep, replysend }) {
         </div>
         <div className="para">
           {edit == true && c.user.username == "juliusomo" ? (
-            <textarea value={c.content} onChange={() => {}} />
+            <textarea
+              value={upcmnt}
+              onChange={(e) => {
+                setupdcmnt(e.target.value);
+              }}
+            />
           ) : (
             <p>{c.content}</p>
           )}
@@ -76,23 +105,30 @@ function Comments({ c, delcmnt, delrep, replysend }) {
               <div className="reply" key={r.id}>
                 <div className="cmnthead">
                   <div className="name">
-                    <img src={r.user.image} alt="image not found" />
+                    {r.user && r.user.image && (
+                      <img src={r.user.image} alt="image not found" />
+                    )}
                     <div
                       className="username"
                       style={
-                        r.user.username == "juliusomo" ? { gap: "6px" } : null
+                        r.user && r.user.username === "juliusomo"
+                          ? { gap: "6px" }
+                          : null
                       }
                     >
-                      <span>{r.user.username}</span>
-                      {r.user.username == "juliusomo" && (
+                      <span>{r.user && r.user.username}</span>
+                      {r.user && r.user.username === "juliusomo" && (
                         <span className="you">you</span>
                       )}
-                      <p>{r.createdAt}</p>
+                      {r.createdAt && <p>{r.createdAt}</p>}
                     </div>
                   </div>
                   {r.user.username == "juliusomo" ? (
                     edit ? (
-                      <button className="update" onClick={() => setedit(false)}>
+                      <button
+                        className="update"
+                        onClick={() => updatereply(c.id, r.id)}
+                      >
                         UPDATE
                       </button>
                     ) : (
@@ -105,7 +141,7 @@ function Comments({ c, delcmnt, delrep, replysend }) {
                         </button>
                         <button
                           className="btnreply"
-                          onClick={() => setedit(true)}
+                          onClick={() => editcmnt(r.content)}
                         >
                           <img src={iconedit} alt="logo not found" /> Edit
                         </button>
@@ -124,7 +160,12 @@ function Comments({ c, delcmnt, delrep, replysend }) {
                 </div>
                 <div className="para">
                   {edit == true && r.user.username == "juliusomo" ? (
-                    <textarea value={r.content} onChange={() => {}} />
+                    <textarea
+                      value={upcmnt}
+                      onChange={(e) => {
+                        setupdcmnt(e.target.value);
+                      }}
+                    />
                   ) : (
                     <p>
                       <span>@{r.replyingTo}</span> {r.content}

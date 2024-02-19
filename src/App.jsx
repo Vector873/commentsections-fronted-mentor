@@ -59,6 +59,7 @@ function App() {
     ],
   });
   const [cmnt, setcmnt] = useState("");
+  const [upcmnt, setupdcmnt] = useState("");
   const replysend = (c, pid) => {
     if (c == "") return;
     const { currentUser, comments } = dataobj;
@@ -166,6 +167,36 @@ function App() {
       comments: updatedComments,
     });
   };
+  const updatec = (id) => {
+    const { currentUser, comments } = dataobj;
+    const updatedata = comments.map((c) => {
+      c.id === id ? (c.content = upcmnt) : c.content;
+      return c;
+    });
+    setdataobj({
+      ...dataobj,
+      comments: updatedata,
+    });
+  };
+  const updaterep = (pid, rid) => {
+    const { currentUser, comments } = dataobj;
+    const updatedComments = comments.map((c) => {
+      if (c.id === pid) {
+        const updatedReplies = c.replies.map((r) =>
+          r.id === rid ? (r.content = upcmnt) : r.content
+        );
+        return {
+          ...c,
+          replies: updatedReplies,
+        };
+      }
+      return c;
+    });
+    setdataobj({
+      ...dataobj,
+      comments: updatedComments,
+    });
+  };
   return (
     <div className="maindiv">
       {dataobj.comments &&
@@ -176,6 +207,10 @@ function App() {
             delcmnt={delcmnt}
             delrep={delrep}
             replysend={replysend}
+            updatec={updatec}
+            updaterep={updaterep}
+            upcmnt={upcmnt}
+            setupdcmnt={setupdcmnt}
           />
         ))}
       <div className="cmntbox">
